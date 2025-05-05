@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { QuizOption, OptionState } from './QuizOption';
 import { Button } from "@/components/ui/button";
 
@@ -19,6 +19,12 @@ interface QuizQuestionProps {
 export const QuizQuestion = ({ question, onAnswer, onNext }: QuizQuestionProps) => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [revealAnswer, setRevealAnswer] = useState(false);
+  
+  // Reset state when the question changes
+  useEffect(() => {
+    setSelectedOption(null);
+    setRevealAnswer(false);
+  }, [question.id]);
   
   const handleOptionClick = (index: number) => {
     if (revealAnswer) return;
